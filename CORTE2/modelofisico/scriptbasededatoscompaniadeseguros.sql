@@ -1,3 +1,4 @@
+## Victoria Rios Rodriguez
 ## query instruccion o peticion a la base de datos
 /* 
 lenguaje de definicion de datos DDL 
@@ -30,7 +31,11 @@ idseguro varchar (50) primary key,
  fechaexpiracion date not null,
  valorasegurado double not null,
  idcompaniaFK varchar (50) not null,
- idautomovilFK varchar (50) not null);
+ idautomovilFK varchar (50) not null
+ ## constraint FKCompaniaSeguros
+ ##foreign key (idcompaniaFK)
+##references compania(idcompania)
+ );
  create table automovil (
  idauto varchar (50) primary key, 
  marca varchar (50) not null,
@@ -51,4 +56,54 @@ idseguro varchar (50) primary key,
  heridos int null,
  fatalidades int null,
  automotores int not null);
- 
+
+##Describir la estructura de las tablas describe nombre_tabla
+
+describe seguros;
+## relaciones
+##opcion 1 crear la relacion al mismo tiempo que la tabla
+##opcion 2 crear un alter table 
+
+alter table seguros 
+add constraint FKCompaniaSeguros
+foreign key (idcompaniaFK)
+references compania(idcompania);
+
+alter table seguros 
+add constraint FKautomovilSeguros
+foreign key (idautomovilFK)
+references automovil(idauto);
+
+##agregar campo nuevo
+alter table compania add direccionCompania varchar (50) not null;
+describe compania;
+
+##modificar un campo
+ ##change alter table compania change nombreanterior nombrenuevo varchar (50) not null;
+alter table compania change nit nitCompania varchar (11);
+#cambiar nombre de un campo
+alter table accidente change heridos numheridos int;
+alter table accidente change numheridos numHeridos int;
+
+## borrar el campo de una tabla quito el campo modelo de la tabla automovil
+alter table automovil drop column modelo; 
+
+##borrar llave foranea 
+alter table seguros drop constraint FKautomovilSeguros;
+
+## terminar de hacer las relaciones del ejercicio
+
+alter table seguros 
+add constraint FKautomovilSeguros
+foreign key (idautomovilFK)
+references automovil(idauto);
+
+alter table  detallesaccidente
+add constraint FKdetalleaccidenteAutomovil
+foreign key (idautoFK)
+references automovil(idauto);
+
+alter table  detallesaccidente
+add constraint FKdetalleaccidenteAccidente
+foreign key (idaccidenteFK)
+references accidente(idaccidente);
