@@ -150,7 +150,36 @@ select * from productos;
 delete from productos 
 where stockProducto<3;
 
+##sentencia para la consulta
+##SELECT para consultar
+##consultas generales (todos los datos o campos de una tabla) select * /[campos]from [nombre de la tabla]
+##consultas especificas alias/ calusula where/likes/subconsulta/multitabla/operaciones calculadas/ agrupadas/ ordenadas
 
+describe productos;
+alter table productos
+change stockProducto stoProdT int;
+
+select nombreProducto,stoProdT from productos;
+select nombreProducto as Nombre_Producto,stoProdT as Stock from productos;
+select nombreProducto as Nombre_Producto,stoProdT as Stock  where idProducto=1;
+select nombreProducto as Nombre_Producto,stoProdT as Stock  where stoProdT>15 and idProducto=1;
+select nombreProducto as Nombre_Producto,stoProdT as Stock
+from productos order by stoProdT ASC;
+select nombreProducto as Nombre_Producto,stoProdT as Stock
+from productos order by stoprodT DESC;
+select nombreProducto as Nombre_Producto,stoProdT as Stock where stoProdT>25 or idProducto=1;
+
+select nombreProducto as Nombre_Producto, precioProducto as precio 
+from productos where precioProducto between 50000 and 100000 order by precio asc; 
+
+## like buscar que inicie/termine/ o contenga
+##inicie
+select * from productos where nombreProducto like "mo%";
+##contenga
+select * from productos where nombreProducto like "%o%";
+##termina
+select * from productos where nombreProducto not like "%s";
+ 
 
 SET SQL_SAFE_UPDATES = 1;
 SET SQL_SAFE_UPDATES = 0;
