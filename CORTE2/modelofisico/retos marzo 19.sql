@@ -179,7 +179,66 @@ select * from productos where nombreProducto like "mo%";
 select * from productos where nombreProducto like "%o%";
 ##termina
 select * from productos where nombreProducto not like "%s";
- 
+
+##insercion de csv
+
+LOAD DATA INFILE "C:\Users\Desik\Downloads\clientes.csv"
+INTO TABLE clientes
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE "C:\Users\Desik\Documents\Universidad\2026-1\Ingieneria de datos\victoriaRiosRodriguez\CORTE2\csv script tienda online\productos.csv"
+INTO TABLE productos
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE "C:\Users\Desik\Documents\Universidad\2026-1\Ingieneria de datos\victoriaRiosRodriguez\CORTE2\csv script tienda online\pedidos.csv"
+INTO TABLE pedidos 
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE "C:\Users\Desik\Documents\Universidad\2026-1\Ingieneria de datos\victoriaRiosRodriguez\CORTE2\csv script tienda online\backup.csv"
+INTO TABLE cliente_cbackup
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+
+##metodos de enteros
+
+## round para redondear decimales
+SELECT nombreProducto, ROUND(precioProducto, 0) AS precioRedondeado
+FROM productos;
+
+## sumar y sacar promedio
+SELECT categoriaProducto,
+       SUM(stockProducto) AS totalStock,
+       AVG(precioProducto) AS precioPromedio
+FROM productos
+GROUP BY categoriaProducto;
+
+##metodos de string 
+
+## upper pone el dato en mayusculas length para saber la cantidad de caracteres
+SELECT UPPER(nombreCliente) AS nombreMayusculas,
+       LENGTH(nombreCliente) AS cantidadCaracteres
+FROM clientes;
+
+## substring y locate para generar un substring
+SELECT nombreCliente,
+       SUBSTRING(emailCliente, LOCATE('@', emailCliente) + 1) AS dominio
+FROM clientes;
+use tiendaOnline;
+
+
+##enunciado subconsultas
+##Mostrar los clientes que han realizado al menos dos pedido de un producto cuyo precio sea mayor a $100.000.
+
+##enunciado consultas multitabla
+##Mostrar el nombre del cliente, la fecha del pedido, el nombre del producto que pidió y la cantidad, para todos los pedidos registrados.
 
 SET SQL_SAFE_UPDATES = 1;
 SET SQL_SAFE_UPDATES = 0;
