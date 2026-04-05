@@ -188,7 +188,7 @@ FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE "C:\Users\Desik\Documents\Universidad\2026-1\Ingieneria de datos\victoriaRiosRodriguez\CORTE2\csv script tienda online\productos.csv"
+LOAD DATA INFILE 'C:\Users\Desik\Documents\Universidad\2026-1\Ingieneria de datos\victoriaRiosRodriguez\CORTE2\csv script tienda online\productos.csv'
 INTO TABLE productos
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
@@ -200,11 +200,7 @@ FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE "C:\Users\Desik\Documents\Universidad\2026-1\Ingieneria de datos\victoriaRiosRodriguez\CORTE2\csv script tienda online\backup.csv"
-INTO TABLE cliente_cbackup
-FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+
 
 
 ##metodos de enteros
@@ -233,12 +229,27 @@ SELECT nombreCliente,
 FROM clientes;
 use tiendaOnline;
 
-
+select * from productos; ## escojo todos los elemntos de la tabla producto
 ##enunciado subconsultas
-##Mostrar los clientes que han realizado al menos dos pedido de un producto cuyo precio sea mayor a $100.000.
+## una consulta anidada
+##Mostrar los clientes que han realizado al menos dos pedidos de un producto cuyo precio sea mayor a $100.000.
 
 ##enunciado consultas multitabla
 ##Mostrar el nombre del cliente, la fecha del pedido, el nombre del producto que pidió y la cantidad, para todos los pedidos registrados.
 
+##agrupar grpoup by
+##select camposAConsultar from nombreTabla group by by campoAgrupar
+
+select count(*) as total, avg(precioProducto) as PromedioPrecio, max(precioProducto) as PrecioMaximo,
+min(precioProducto) as PrecioMinimo,
+sum(stoProdT)as StockTotal
+from productos;
+
+select nombreCliente as nombre, 
+upper(nombreCliente) as NombreMayuscula,
+concat(nombreCliente, '',emailCliente) as concatenar
+from clientes
+
+select * from productos group by categoriaProducto; 
 SET SQL_SAFE_UPDATES = 1;
 SET SQL_SAFE_UPDATES = 0;
