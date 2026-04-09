@@ -120,3 +120,141 @@ from pedido p
 inner join empleado      e  on p.idempleadofk  = e.idempleado
 inner join detallepedido dp on p.idpedido      = dp.idpedidofk
 inner join producto      pr on dp.idproductofk = pr.idproducto;
+
+
+use tiendaonline;
+
+##procedimientos almacenados - funciones-vistas
+/* procedimientod almacenados
+
+son bloques de codigo de sql que tiene nombre que se almacenaen el servidor y se ejecutan
+ con invocacion o llamandolos, pueden ser de registro, consulta, modificacion, actualizacion o eliminacion
+ 
+ con parametros entrada, salida o ambos
+ 
+ sintaxis
+ crear procedimiento
+ delimiter//
+ create procedure  nombreProcedimiento( 
+ in parametroEntrada tipo, 
+ out parametroSalida tipo,
+ inout parametroEntradaSalida tipo
+ )
+begin
+--declaracion variables locales---
+declare variable tipo default valor
+
+--cuerpo del procedimiento--
+
+sentencias sql, control de flujo...alter
+
+end//
+ delimiter;
+ 
+ --invocar procedimiento 
+ call nombre (valores de los parametro)
+ ejemplo 1
+ registro de pedido
+ */
+ 
+ Delimiter //
+ 
+ create procedure crear_pedido(
+ in p_idCliente int,
+ in p_IdProducto int,
+ in p_cantidad int,
+ out p_id_pedido int,
+ out p_mensaje varchar(2000)
+ )
+ 
+ begin 
+ 
+ declare v_stock int;
+ declare v_precio double;
+ declare v_total double;
+ -- mensaje de error--
+ declare exit handler for SQLEXCEPTION
+		begin 
+			rollback;
+            set p_mensaje="error: transaccion rechazada";
+            set p_id_pedido=-1;
+            end;
+            
+--
+select 	stock,precio into v_stock, v_precio
+from productos where idProducto=p_IdProducto;
+
+if v_stock< cantidad then 
+	set p_mensaje=concat("stockInsuficiente Disponible:", v_stock);
+	set p_id_pedido=0;
+else 
+	start transaction;
+	 set v_total= v_precio*p_cantidad;
+	 
+	 insert into pedidos(id_cliente, total) values(p_id_cliente, v_total);
+	 set id_pedido= last_insert_id();
+	 
+	  insert into detallePedidos(id_pedido,idProducto, cantidad, precio_unit) values(p_id_pedido, p_cantidad, v_precio);
+	  
+	  update productos
+	  set stock = stock-p_cantidad
+	  where idProducto=p_id_producto;
+	  commit;
+	  set p_mensaje= concat("pedido #", p_id_pedido,"creado correctamente");
+      end if;
+      
+end //
+
+delimiter ;
+
+
+
+ Delimiter //
+ 
+ create procedure cancelar_pedido(
+ in p_idCliente int,
+ in p_IdProducto int,
+ out p_mensaje varchar(2000)
+ )
+ 
+ begin 
+ 
+ declare v_cantidad int;
+ declare v_precio double;
+ declare v_id_cliente int;
+ declare v_estado_pedido varchar(50);
+ -- mensaje de error--
+ declare exit handler for SQLEXCEPTION
+		begin 
+			rollback;
+            set p_mensaje="error: transaccion rechazada";
+            set p_id_pedido=-1;
+            end;
+            
+--
+select 	cantidad into v_cantidad
+from detallePedido where idpedidp=p_IdPedido;
+select 	idCliente,estadoPedido into v_id_cliente, v_estado
+from pedido where idpedidp=p_IdPedido;
+
+
+if v_id_cliente != p_idCliente or v_estado="cancelado" then 
+	set p_mensaje=concat("no se puede cancelar el pedido pedido ya cancelado o cliente no corresponde");
+else 
+	start transaction;
+	  
+	  update productos
+	  set stock = stock+v_cantidad
+	  where idProducto=p_id_producto;
+       update pedido
+	  set estado = "cancelado"
+	  where idProducto=p_id_producto;
+	  commit;
+	  set p_mensaje= concat("pedido #", p_id_pedido,"cancelado correctamente");
+      end if;
+      
+end //
+
+delimiter ;
+            
+        
