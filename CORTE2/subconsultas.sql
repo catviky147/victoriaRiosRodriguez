@@ -1,6 +1,6 @@
 
-create database if not exists tiendaonline_v2;
-use tiendaonline_v2;
+create database tiendaonline;
+use tiendaonline;
 
 
 create table departamento (
@@ -112,7 +112,7 @@ insert into detallepedido (idpedidofk, idproductofk, cantidad) values
 
 select
     p.idpedido,
-    e.nombreeempleado  as cliente,
+    e.nombreeempleado  as empleado,
     p.preciototal,
     pr.nombreproducto  as producto,
     dp.cantidad
