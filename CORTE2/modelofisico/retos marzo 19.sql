@@ -252,36 +252,7 @@ from productos;
 #reto 1
 
 delete empleado from tiendaonline;
-create table departamento( idDepto varchar (50) primary key,
-nombreDepto varchar (50) not null);
-drop table empleado;
-create table empleado(
-idEmpleado varchar (50) primary key,
-nombreEmpleado varchar (50)not null,
-deptoIdFK varchar (50) not null, 
-salario int (10),
-constraint FKDeptoEmple
-foreign key (deptoIdFK)
-references departamento(idDepto));
 
-create table producto(
-idProducto int auto_increment primary key,
-nombreProducto varchar(50) not null,
-precioProducto double not null,
-categoria varchar(50) not null);
-describe departamento;
-
-
-
-describe departamento;
-select * from productos group by categoriaProducto; 
-
-insert into producto(idProducto,nombreProducto,precioProducto,categoria) values ('','Audifonos inalambricos','50000','accesorios'),
-('','Laptop','1000000','tecnologia'),
-('','Iphone','4000000','tecnologia'),
-('','Iphone15','2000000','tecnologia'),
-('','','4000000','tecnologia');
-
-use tiendaonline;
+drop database tiendaonline;
 SET SQL_SAFE_UPDATES = 1;
 SET SQL_SAFE_UPDATES = 0;

@@ -257,4 +257,47 @@ end //
 
 delimiter ;
             
-        
+/* sintaxis de las funciones
+delimiter //
+create function nombre_funcion(
+parametro1 tipo,
+parametro2 tipo
+)
+returns tipo_retorno 
+deterministic
+now(), rand()
+reads sql data
+tablas 
+
+begin 
+	declare variable tipo
+    ---logica---
+    return variable;
+	
+end //
+
+delimiter ;
+
+
+*/
+##calcular descuento
+
+delimiter //
+create function fn_descuento_volumen (p_cantidad int,
+p_precio double)
+returns double
+deterministic
+begin
+
+declare v_porcentaje decimal(5,2);
+declare v_total decimal(12,2);
+-- definir el porcentaje de descuento segun la cantidad comprada
+set v_porcentaje= case
+	when p_cantidad>=100 then 20.00
+    when p_cantidad>=50 then 15.00
+    when p_cantidad>=20 then 10.00
+	when p_cantidad>=10 then 5.00
+    
+end//
+
+fn_clasificar_cliente
