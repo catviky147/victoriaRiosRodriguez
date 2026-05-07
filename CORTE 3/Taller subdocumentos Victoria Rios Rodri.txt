@@ -1,0 +1,286 @@
+Taller subdocumentos Victoria Rios Rodriguez
+
+use kpop_bands
+
+db.bands.insertMany([
+  {
+    name: "Red Velvet",
+    debut_year: 2014,
+    company: "SM Entertainment"
+  },
+  {
+    name: "TWICE",
+    debut_year: 2015,
+    company: "JYP Entertainment"
+  },
+  {
+    name: "IVE",
+    debut_year: 2021,
+    company: "Starship Entertainment"
+  },
+  {
+    name: "TOMORROW X TOGETHER",
+    debut_year: 2019,
+    company: "Big Hit Music"
+  },
+  {
+    name: "NewJeans",
+    debut_year: 2022,
+    company: "ADOR"
+  }
+])
+
+
+
+// Red Velvet - Primer álbum
+db.bands.updateOne(
+  { name: "Red Velvet" }, 
+  { 
+    $push: { 
+      albums: {          
+        title: "The ReVe Festival: Finale",
+        year: 2019,
+        type: "Studio Album",
+        songs: []       
+      }
+    } 
+  }
+)
+
+// Red Velvet - Segundo álbum
+db.bands.updateOne(
+  { name: "Red Velvet" },
+  { 
+    $push: { 
+      albums: {
+        title: "Feel My Rhythm",
+        year: 2022,
+        type: "EP",
+        songs: []
+      }
+    } 
+  }
+)
+
+
+
+db.bands.updateOne(
+  { 
+    name: "Red Velvet",           
+    "albums.title": "The ReVe Festival: Finale" 
+  },
+  {
+    $push: {
+      "albums.$.songs": {       
+        title: "Psycho",
+        duration: "3:30",
+        producer: "Kenzie"
+      }
+    }
+  }
+)
+
+//segunda cancion
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "The ReVe Festival: Finale" },
+  { $push: { "albums.$.songs": { title: "In & Out", duration: "3:12", producer: "Kenzie" } } }
+)
+
+// Tercera canción
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "The ReVe Festival: Finale" },
+  { $push: { "albums.$.songs": { title: "Remember Forever", duration: "3:35", producer: "Jinbyjin" } } }
+)
+
+// Cuarta canción
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "The ReVe Festival: Finale" },
+  { $push: { "albums.$.songs": { title: "Zimzalabim", duration: "3:17", producer: "Ollipop" } } }
+)
+
+// Quinta canción
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "The ReVe Festival: Finale" },
+  { $push: { "albums.$.songs": { title: "Umpah Umpah", duration: "3:25", producer: "Lee Soo-man" } } }
+)
+
+// segundo album Red Velvet
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "Feel My Rhythm" },
+  { $push: { "albums.$.songs": { title: "Feel My Rhythm", duration: "3:30", producer: "Kenzie" } } }
+)
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "Feel My Rhythm" },
+  { $push: { "albums.$.songs": { title: "Rainbow Halo", duration: "3:17", producer: "Yoo Young-jin" } } }
+)
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "Feel My Rhythm" },
+  { $push: { "albums.$.songs": { title: "Beg For Me", duration: "3:15", producer: "KENZIE" } } }
+)
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "Feel My Rhythm" },
+  { $push: { "albums.$.songs": { title: "Bamboleo", duration: "3:35", producer: "Andreas Öberg" } } }
+)
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "Feel My Rhythm" },
+  { $push: { "albums.$.songs": { title: "Good, Bad, Ugly", duration: "3:25", producer: "Mike Daley" } } }
+)
+
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "The ReVe Festival: Finale" },
+  { $unset: { "albums.$.type": "" } }
+)
+
+
+db.bands.updateOne(
+  { name: "Red Velvet", "albums.title": "Feel My Rhythm" },
+  { $set: { "albums.$.songs": [] } }
+)
+
+
+db.bands.updateOne(
+  { name: "TWICE", "albums.title": "Eyes Wide Open" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "I Can't Stop Me", duration: "3:25", producer: "Melanie Joy Fontana" },
+          { title: "Hell in Heaven", duration: "2:45", producer: "LDN Noise" },
+          { title: "Up No More", duration: "3:10", producer: "JYP" },
+          { title: "Do What We Like", duration: "3:26", producer: "Ryan S. Jhun" },
+          { title: "Bring It Back", duration: "3:15", producer: "earattack" }
+        ]
+      }
+    }
+  }
+)
+
+
+db.bands.updateOne(
+  { name: "TWICE", "albums.title": "Formula of Love: O+T=<3" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "Scientist", duration: "3:14", producer: "Melanie Joy Fontana" },
+          { title: "Moonlight", duration: "3:11", producer: "Destiny Rogers" },
+          { title: "Icon", duration: "3:10", producer: "Ryan S. Jhun" },
+          { title: "Cruel", duration: "3:20", producer: "LDN Noise" },
+          { title: "Real You", duration: "3:10", producer: "earattack" }
+        ]
+      }
+    }
+  }
+)
+
+
+db.bands.updateOne(
+  { name: "IVE", "albums.title": "I've IVE" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "I AM", duration: "3:03", producer: "Ryan S. Jhun" },
+          { title: "Kitsch", duration: "3:15", producer: "Ryan S. Jhun" },
+          { title: "Lips", duration: "3:10", producer: "Ryan S. Jhun" },
+          { title: "Mine", duration: "3:15", producer: "Lauritz Emil Christiansen" },
+          { title: "Hypnosis", duration: "3:23", producer: "Stian Nyhammer Olsen" }
+        ]
+      }
+    }
+  }
+)
+
+
+db.bands.updateOne(
+  { name: "IVE", "albums.title": "IVE SWITCH" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "HEYA", duration: "3:15", producer: "Ryan S. Jhun" },
+          { title: "Accendio", duration: "3:12", producer: "Ryan S. Jhun" },
+          { title: "Blue Heart", duration: "3:10", producer: "Albin Tengblad" },
+          { title: "Reset", duration: "3:15", producer: "Kim Seung-soo" },
+          { title: "Ice Queen", duration: "3:18", producer: "Ryan S. Jhun" }
+        ]
+      }
+    }
+  }
+)
+
+
+db.bands.updateOne(
+  { name: "TOMORROW X TOGETHER", "albums.title": "The Chaos Chapter: FREEZE" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "0X1=LOVESONG", duration: "3:25", producer: "Slow Rabbit" },
+          { title: "Dear Sputnik", duration: "3:15", producer: "HUENINGKAI" },
+          { title: "Magic", duration: "3:35", producer: "Olly Murs" },
+          { title: "Frost", duration: "3:15", producer: "Ashe" },
+          { title: "No Rules", duration: "3:05", producer: "Slow Rabbit" }
+        ]
+      }
+    }
+  }
+)
+
+db.bands.updateOne(
+  { name: "TOMORROW X TOGETHER", "albums.title": "The Dream Chapter: MAGIC" },
+  {$push: {"albums.$.songs": {
+        $each: [
+          { title: "Run Away", duration: "3:31", producer: "Slow Rabbit" },
+          { title: "Can't We Just Leave the Monster Alone?", duration: "3:45", producer: "Hueningkai" },
+          { title: "New Rules", duration: "2:55", producer: "EL CAPITXN" },
+          { title: "Roller Coaster", duration: "3:24", producer: "Sam Klempner" },
+          { title: "Magic Island", duration: "3:40", producer: "Slow Rabbit" }
+        ]
+      }
+    }
+  }
+)
+
+db.bands.updateOne(
+  { name: "NewJeans", "albums.title": "New Jeans" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "Attention", duration: "3:00", producer: "250" },
+          { title: "Hype Boy", duration: "2:59", producer: "250" },
+          { title: "Cookie", duration: "3:55", producer: "250" },
+          { title: "Hurt", duration: "3:28", producer: "250" },
+          { title: "OMG", duration: "3:02", producer: "250" }
+        ]
+      }
+    }
+  }
+)
+
+db.bands.updateOne(
+  { name: "NewJeans", "albums.title": "Get Up" },
+  {
+    $push: {
+      "albums.$.songs": {
+        $each: [
+          { title: "Super Shy", duration: "2:34", producer: "250" },
+          { title: "ETA", duration: "2:31", producer: "250" },
+          { title: "Cool With You", duration: "2:27", producer: "250" },
+          { title: "New Jeans", duration: "1:48", producer: "250" },
+          { title: "ASAP", duration: "2:34", producer: "250" }
+        ]
+      }
+    }
+  }
+)
+
+
+db.bands.find().pretty();
